@@ -8,8 +8,7 @@
   :resource-paths ["target/generated/src/cljs" "resources"]
   :dependencies [[org.clojure/clojure "1.7.0" :scope "provided"]
                  [org.clojure/clojurescript "1.7.228" :scope "provided"]
-                 [cljsjs/react-bootstrap "0.28.1-1"]
-                 [prismatic/om-tools "0.4.0"]]
+                 [cljsjs/react-bootstrap "0.28.1-1"]]
   :scm {:name "git"
         :url "https://github.com/luxbock/bootstrap-cljs"}
   :deploy-repositories [["clojars" {:creds :gpg}]]

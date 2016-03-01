@@ -2,7 +2,7 @@
   (:refer-clojure :exclude [use mask])
   (:require #?(:cljs cljsjs.react-bootstrap)
             [clojure.string :as str]
-            [om-tools.dom :as omt]))
+            [bootstrap-cljs.om-tools-replacement :refer [literal? element-args element possible-coll?]]))
 
 (defn kebab-case
   "Converts CamelCase / camelCase to kebab-case"
@@ -86,10 +86,10 @@
      `(defmacro ~(symbol (kebab-case (str tag)))
         [opts# & children#]
         (let [ctor# '(.createFactory js/React (~(symbol (str ".-" (name tag))) js/ReactBootstrap))]
-          (if (om-tools.dom/literal? opts#)
-            (let [[opts# children#] (om-tools.dom/element-args opts# children#)]
+          (if (literal? opts#)
+            (let [[opts# children#] (element-args opts# children#)]
               (cond
-                (every? (complement om-tools.dom/possible-coll?) children#)
+                (every? (complement possible-coll?) children#)
                 `(~ctor# ~opts# ~@children#)
 
                 (and (= (count children#) 1) (vector? (first children#)))
@@ -97,7 +97,7 @@
 
                 :else
                 `(apply ~ctor# ~opts# (flatten (vector ~@children#)))))
-            `(om-tools.dom/element ~ctor# ~opts# (vector ~@children#)))))))
+            `(element ~ctor# ~opts# (vector ~@children#)))))))
 
 #?(:clj
    (defmacro ^:private gen-bootstrap-inline-fns []
